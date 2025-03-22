@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import at.ac.fhcampuswien.fhmdb.models.MovieService;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -46,7 +47,8 @@ public class HomeController implements Initializable {
         movieListView.setItems(observableMovies);   // set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell()); // use custom cell factory to display data
 
-        // TODO add genre filter items with genreComboBox.getItems().addAll(...)
+        // add genre filter
+        genreComboBox.getItems().addAll(Genre.values());
         genreComboBox.setPromptText("Filter by Genre");
 
         // TODO add event handlers to buttons and call the regarding methods
@@ -62,7 +64,19 @@ public class HomeController implements Initializable {
                 sortBtn.setText("Sort (asc)");
             }
         });
-
-
     }
+
+    private void applyFilters() {
+        String searchQuery = searchField.getText();
+        Genre selectedGenre = genreComboBox.getValue();
+    
+        List<Movie> filteredMovies = movieService.filterMoviesByQuery(allMovies, searchQuery);
+        filteredMovies = movieService.filterMoviesByGenre(filteredMovies, selectedGenre);
+    
+        observableMovies.clear();
+        observableMovies.addAll(filteredMovies);
+        applySorting();
+    }
+
+    
 }
