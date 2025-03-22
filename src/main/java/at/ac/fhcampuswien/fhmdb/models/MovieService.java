@@ -2,21 +2,31 @@ package at.ac.fhcampuswien.fhmdb.models;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 public class MovieService {
 
     public List<Movie> filterMoviesByQuery(List<Movie> movies, String searchQuery) {
-    if (searchQuery == null || searchQuery.isEmpty()) {
-        return new ArrayList<>(movies);
+        List<Movie> filtered = new ArrayList<>();
+    
+        if (searchQuery == null || searchQuery.isEmpty()) {
+            filtered.addAll(movies);
+            return filtered;
+        }
+    
+        String query = searchQuery.toLowerCase();
+    
+        for (Movie movie : movies) {
+            String title = movie.getTitle() != null ? movie.getTitle().toLowerCase() : "";
+            String description = movie.getDescription() != null ? movie.getDescription().toLowerCase() : "";
+    
+            if (title.contains(query) || description.contains(query)) {
+                filtered.add(movie);
+            }
+        }
+    
+        return filtered;
     }
+    
 
-    String query = searchQuery.toLowerCase();
-    return movies.stream()
-            .filter(movie ->
-                    movie.getTitle().toLowerCase().contains(query) ||
-                    movie.getDescription().toLowerCase().contains(query))
-            .collect(Collectors.toList());
-}
+
 
 }
