@@ -54,20 +54,13 @@ public class HomeController implements Initializable {
         genreComboBox.getItems().addAll(Genre.values());
         genreComboBox.setPromptText("Filter by Genre");
 
-        // TODO add event handlers to buttons and call the regarding methods
-        // either set event handlers in the fxml file (onAction) or add them here
+        searchBtn.setOnAction(actionEvent -> applyFilters());
 
-        // Sort button example:
-        sortBtn.setOnAction(actionEvent -> {
-            if(sortBtn.getText().equals("Sort (asc)")) {
-                // TODO sort observableMovies ascending
-                sortBtn.setText("Sort (desc)");
-            } else {
-                // TODO sort observableMovies descending
-                sortBtn.setText("Sort (asc)");
-            }
-        });
-    }
+        if (filterBtn != null) {
+            filterBtn.setOnAction(actionEvent -> applyFilters());
+        }
+
+        }
 
     private void applyFilters() {
         String searchQuery = searchField.getText();
