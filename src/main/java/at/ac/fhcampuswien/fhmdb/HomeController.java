@@ -54,9 +54,9 @@ public class HomeController implements Initializable {
         // either set event handlers in the fxml file (onAction) or add them here
         searchBtn.setOnAction(actionEvent -> applyFilters());
 
-        if (filterBtn != null) {
-            filterBtn.setOnAction(actionEvent -> applyFilters());
-        }
+        // if (filterBtn != null) {
+        //     filterBtn.setOnAction(actionEvent -> applyFilters());
+        // }
 
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {
@@ -85,9 +85,7 @@ public class HomeController implements Initializable {
     // Update observable list
     observableMovies.clear();
     observableMovies.addAll(filteredMovies);
-    
-    // Re-apply sorting
-    applySorting();
+
     }
 
 }
