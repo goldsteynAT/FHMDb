@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
@@ -23,10 +24,10 @@ public class HomeController implements Initializable {
     public TextField searchField;
 
     @FXML
-    public JFXListView movieListView;
+    public JFXListView<Movie> movieListView;
 
     @FXML
-    public JFXComboBox genreComboBox;
+    public JFXComboBox<Genre> genreComboBox;
 
     @FXML
     public JFXButton sortBtn;
@@ -44,6 +45,7 @@ public class HomeController implements Initializable {
         movieListView.setCellFactory(movieListView -> new MovieCell()); // use custom cell factory to display data
 
         // TODO add genre filter items with genreComboBox.getItems().addAll(...)
+        genreComboBox.getItems().addAll(Genre.values());
         genreComboBox.setPromptText("Filter by Genre");
 
         // TODO add event handlers to buttons and call the regarding methods
