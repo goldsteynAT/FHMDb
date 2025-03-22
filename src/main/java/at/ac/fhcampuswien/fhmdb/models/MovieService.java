@@ -1,6 +1,8 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 public class MovieService {
 
@@ -43,9 +45,17 @@ public class MovieService {
     
         return filtered;
     }
-    
-    
 
+    public List<Movie> sortMovies(List<Movie> movies, boolean ascending) {
+    List<Movie> sortedMovies = new ArrayList<>(movies);
 
+    if (ascending) {
+        Collections.sort(sortedMovies, Comparator.comparing(Movie::getTitle));
+    } else {
+        Collections.sort(sortedMovies, Comparator.comparing(Movie::getTitle).reversed());
+    }
+
+    return sortedMovies;
+    }
 
 }
