@@ -8,11 +8,13 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import java.util.stream.Collectors;
 
 public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
     private final Label detail = new Label();
-    private final VBox layout = new VBox(title, detail);
+    private final Label genres = new Label();
+    private final VBox layout = new VBox(title, detail, genres);
 
     @Override
     protected void updateItem(Movie movie, boolean empty) {
