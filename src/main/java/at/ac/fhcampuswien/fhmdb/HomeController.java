@@ -41,6 +41,7 @@ public class HomeController implements Initializable {
     private final MovieService movieService = new MovieService();
 
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
+    private boolean isAscending = true;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
