@@ -34,6 +34,9 @@ public class HomeController implements Initializable {
     @FXML
     public JFXButton sortBtn;
 
+    @FXML 
+    public JFXButton filterBtn;
+
     public List<Movie> allMovies = Movie.initializeMovies();
     private final MovieService movieService = new MovieService();
 
