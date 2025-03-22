@@ -60,6 +60,8 @@ public class HomeController implements Initializable {
             filterBtn.setOnAction(actionEvent -> applyFilters());
         }
 
+        genreComboBox.setOnAction(event -> applyFilters());
+
         }
 
     private void applyFilters() {
