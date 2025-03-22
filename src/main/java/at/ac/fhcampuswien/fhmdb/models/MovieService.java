@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 public class MovieService {
 
+    // enable case-insensitive search in title or description
     public List<Movie> filterMoviesByQuery(List<Movie> movies, String searchQuery) {
         List<Movie> filtered = new ArrayList<>();
     
@@ -25,6 +26,24 @@ public class MovieService {
     
         return filtered;
     }
+
+    public List<Movie> filterMoviesByGenre(List<Movie> movies, Genre genre) {
+        List<Movie> filtered = new ArrayList<>();
+    
+        if (genre == null) {
+            filtered.addAll(movies);
+            return filtered;
+        }
+    
+        for (Movie movie : movies) {
+            if (movie.getGenres().contains(genre)) {
+                filtered.add(movie);
+            }
+        }
+    
+        return filtered;
+    }
+    
     
 
 
