@@ -71,4 +71,23 @@ public class HomeController implements Initializable {
 
 
     }
+
+    private void applyFilters() {
+    String searchQuery = searchField.getText();
+    Genre selectedGenre = genreComboBox.getValue();
+    
+    // First filter by search query
+    List<Movie> filteredMovies = movieService.filterMoviesByQuery(allMovies, searchQuery);
+    
+    // Then filter by genre
+    filteredMovies = movieService.filterMoviesByGenre(filteredMovies, selectedGenre);
+    
+    // Update observable list
+    observableMovies.clear();
+    observableMovies.addAll(filteredMovies);
+    
+    // Re-apply sorting
+    applySorting();
+    }
+
 }
