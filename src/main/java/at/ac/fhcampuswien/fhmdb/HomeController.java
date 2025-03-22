@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,11 +33,15 @@ public class HomeController implements Initializable {
 
     @FXML
     public JFXButton sortBtn;
+    
+    @FXML
+    public JFXButton resetBtn;
 
     public List<Movie> allMovies = Movie.initializeMovies();
 
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
     private final MovieService movieService = new MovieService();
+    private boolean isAscending = true;
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,46 +51,73 @@ public class HomeController implements Initializable {
         movieListView.setItems(observableMovies);   // set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell()); // use custom cell factory to display data
 
-        // TODO add genre filter items with genreComboBox.getItems().addAll(...)
+        // add genre filter items
         genreComboBox.getItems().addAll(Genre.values());
         genreComboBox.setPromptText("Filter by Genre");
 
-        // TODO add event handlers to buttons and call the regarding methods
-        // either set event handlers in the fxml file (onAction) or add them here
+        // add event handlers to buttons
         searchBtn.setOnAction(actionEvent -> applyFilters());
+        
+        // Reset button event handler
+        resetBtn.setOnAction(actionEvent -> resetFilters());
 
-        // if (filterBtn != null) {
-        //     filterBtn.setOnAction(actionEvent -> applyFilters());
-        // }
+        // Genre combo box change listener
+        genreComboBox.setOnAction(event -> applyFilters());
 
-        // Sort button example:
+        // Sort button implementation
         sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
-                // TODO sort observableMovies ascending
+                isAscending = false;
+                applySorting();
                 sortBtn.setText("Sort (desc)");
             } else {
-                // TODO sort observableMovies descending
+                isAscending = true;
+                applySorting();
                 sortBtn.setText("Sort (asc)");
             }
         });
-
-
     }
 
     private void applyFilters() {
-    String searchQuery = searchField.getText();
-    Genre selectedGenre = genreComboBox.getValue();
-    
-    // First filter by search query
-    List<Movie> filteredMovies = movieService.filterMoviesByQuery(allMovies, searchQuery);
-    
-    // Then filter by genre
-    filteredMovies = movieService.filterMoviesByGenre(filteredMovies, selectedGenre);
-    
-    // Update observable list
-    observableMovies.clear();
-    observableMovies.addAll(filteredMovies);
-
+        String searchQuery = searchField.getText();
+        Genre selectedGenre = genreComboBox.getValue();
+        
+        // First filter by search query
+        List<Movie> filteredMovies = movieService.filterMoviesByQuery(allMovies, searchQuery);
+        
+        // Then filter by genre
+        filteredMovies = movieService.filterMoviesByGenre(filteredMovies, selectedGenre);
+        
+        // Update observable list
+        observableMovies.clear();
+        observableMovies.addAll(filteredMovies);
+        
+        // Reapply current sorting if any
+        applySorting();
     }
-
+    
+    private void applySorting() {
+        List<Movie> sortedMovies = movieService.sortMovies(
+                new ArrayList<>(observableMovies), 
+                isAscending
+        );
+        
+        observableMovies.clear();
+        observableMovies.addAll(sortedMovies);
+    }
+    
+    public void resetFilters() {
+        // Clear search field
+        searchField.clear();
+        
+        // Reset genre selection
+        genreComboBox.setValue(null);
+        
+        // Reset movies to original list
+        observableMovies.clear();
+        observableMovies.addAll(allMovies);
+        
+        // Maintain current sort order
+        applySorting();
+    }
 }
