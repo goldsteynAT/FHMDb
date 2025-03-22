@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
@@ -27,7 +28,7 @@ public class HomeController implements Initializable {
     public JFXListView movieListView;
 
     @FXML
-    public JFXComboBox genreComboBox;
+    public JFXComboBox<Genre> genreComboBox;
 
     @FXML
     public JFXButton sortBtn;
