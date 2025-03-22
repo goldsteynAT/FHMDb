@@ -78,5 +78,16 @@ public class HomeController implements Initializable {
         applySorting();
     }
 
+    public void clearFilters() {
+        searchField.clear();
+        genreComboBox.setValue(null);
+    
+        observableMovies.clear();
+        observableMovies.addAll(allMovies);
+    
+        applySorting();  // Maintain current sort order
+    }
+    
+
     
 }
