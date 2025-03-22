@@ -8,9 +8,10 @@ public class Movie {
     private String description;
     private List<Genre> genres;
 
-    public Movie(String title, String description) {
+    public Movie(String title, String description, List<Genre> genres) {
         this.title = title;
         this.description = description;
+        this.genres = genres;
     }
 
     public String getTitle() {
@@ -26,5 +27,9 @@ public class Movie {
         // TODO add some dummy data here
 
         return movies;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
     }
 }
