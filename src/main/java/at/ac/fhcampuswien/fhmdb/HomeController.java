@@ -78,6 +78,16 @@ public class HomeController implements Initializable {
         applySorting();
     }
 
+    private void applySorting() {
+        List<Movie> sortedMovies = movieService.sortMovies(
+            new ArrayList<>(observableMovies),
+            isAscending
+        );
+    
+        observableMovies.clear();
+        observableMovies.addAll(sortedMovies);
+    }    
+
     public void clearFilters() {
         searchField.clear();
         genreComboBox.setValue(null);
