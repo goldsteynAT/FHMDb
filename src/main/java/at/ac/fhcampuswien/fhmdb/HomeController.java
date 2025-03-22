@@ -3,6 +3,7 @@ package at.ac.fhcampuswien.fhmdb;
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
+import at.ac.fhcampuswien.fhmdb.models.MovieService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
@@ -35,7 +36,8 @@ public class HomeController implements Initializable {
     public List<Movie> allMovies = Movie.initializeMovies();
 
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
-
+    private final MovieService movieService = new MovieService();
+    
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         observableMovies.addAll(allMovies);         // add dummy data to observable list
@@ -50,6 +52,11 @@ public class HomeController implements Initializable {
 
         // TODO add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
+        searchBtn.setOnAction(actionEvent -> applyFilters());
+
+        if (filterBtn != null) {
+            filterBtn.setOnAction(actionEvent -> applyFilters());
+        }
 
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {
